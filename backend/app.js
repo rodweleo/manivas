@@ -25,8 +25,8 @@ const generateAccessToken = async () => {
     `${process.env.MPESA_BASE_URL}/oauth/v1/generate`,
     {
       auth: {
-        username: process.env.MPESA_CONSUMER_KEY!,
-        password: process.env.MPESA_CONSUMER_SECRET!,
+        username: process.env.MPESA_CONSUMER_KEY,
+        password: process.env.MPESA_CONSUMER_SECRET,
       },
       params: {
         grant_type: "client_credentials",
@@ -87,7 +87,7 @@ app.get("/api/mpesa/stkPush", async (req, res) => {
   const { access_token } = await generateAccessToken();
   const timestamp = moment().format("YYYYMMDDHHmmss");
   const password = btoa(
-    process.env.MPESA_SHORT_CODE! + process.env.MPESA_PASSKEY + timestamp
+    process.env.MPESA_SHORT_CODE + process.env.MPESA_PASSKEY + timestamp
   );
   const stkBody = {
     BusinessShortCode: process.env.MPESA_SHORT_CODE,
