@@ -188,7 +188,7 @@ const DepositForm = () => {
         "https://api-manivas.vercel.app/api/mpesa/stkPush",
        {
         phoneNumber: 254795565344,
-        amount: amount
+        amount: amount.join("")
        }
       );
       setPaymentInProgress(false)
@@ -237,7 +237,7 @@ const DepositForm = () => {
             ))}
           </div>
         </div>
-        <Button className="w-full">{paymentInProgress ? <ClipLoader color="white" size={20}/> : "Deposit" + amount.join("")}</Button>
+        <Button className="w-full">{paymentInProgress ? <ClipLoader color="white" size={20}/> : "Deposit " + amount.join("")}</Button>
       </div>
     </form>
   );
