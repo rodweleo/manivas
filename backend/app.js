@@ -6,7 +6,8 @@ import cors from "cors";
 import axios from "axios";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
-
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "./firebase/firebase.config.js";
 
 const app = express();
 app.use(express.json());
@@ -70,15 +71,6 @@ app.post("/api/mpesa/accountbalance/result", (req, res) => {
   console.log(req.body);
 });
 
-
-
-
-
-
-
-
-
-
 //initiating the stkPush
 app.post("/api/mpesa/stkPush", async (req, res) => {
   const { phoneNumber, amount } = req.body;
@@ -120,11 +112,17 @@ app.post("/api/mpesa/stkPush", async (req, res) => {
   }
 });
 
-app.post("/api/mpesa/callback", async (req, res) => {
-  const docRef = await addDoc(collection(db, "transactions"), {
-    body: req.body
-  })
-  console.log(req.body)
+app.get("/api/mpesa/callback", async (req, res) => {
+  try{
+    const docRef = await addDoc(collection(db, "transactions"), {
+      body: "req.body"
+    })
+    res.send(`Transaction saved under id ${docRef.id}`)
+  }catch(error){
+    res.send(error)
+    console.error(error)
+  }
+  //console.log(req.body)
   //getMpesaCallback(req.body);
   /*const callBackData = req.body;
 
@@ -217,8 +215,6 @@ app.get("/api/v1/mail/sendMail", (req, res) => {
     }
   });
 });
-
-
 
 app.listen("3000", () => {
     console.log('Manivas Co-operation server is live on port 3000')

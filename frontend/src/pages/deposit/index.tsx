@@ -196,12 +196,6 @@ const DepositForm = () => {
         description: response.data.CustomerMessage
       })
 
-      
-      const docRef = await addDoc(collection(db, "transactions"), {
-        body: "Hello"
-      })
-
-      console.log(docRef)
     } catch (error) {
       setPaymentInProgress(false)
       toast({
