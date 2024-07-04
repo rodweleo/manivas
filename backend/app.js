@@ -5,16 +5,8 @@ import nodemailer from "nodemailer";
 import cors from "cors";
 import axios from "axios";
 import moment from "moment";
-import winston from "winston";
 import { v4 as uuidv4 } from "uuid";
-import { MPESA_CALLBACK_ORIGINS } from "./origins/mpesa_callback_origins/index.js";
-//import Binance from 'node-binance-api'
 
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  transports: [new winston.transports.Console()],
-});
 
 const app = express();
 app.use(express.json());
