@@ -112,14 +112,13 @@ app.post("/api/mpesa/stkPush", async (req, res) => {
   }
 });
 
-app.get("/api/mpesa/callback", async (req, res) => {
+app.post("/api/mpesa/callback", async (req, res) => {
   try{
     const docRef = await addDoc(collection(db, "transactions"), {
-      body: "req.body"
+      body: req.body
     })
-    res.send(`Transaction saved under id ${docRef.id}`)
+    console.info(`Transaction saved under id ${docRef.id}`)
   }catch(error){
-    res.send(error)
     console.error(error)
   }
   //console.log(req.body)
