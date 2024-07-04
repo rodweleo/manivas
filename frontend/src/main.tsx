@@ -67,6 +67,7 @@ const router = createBrowserRouter([
   {
     path: "/account/*",
     element: <AccountLayout />,
+    errorElement: <ErrorBoundary/>,
     children: [
       {
         path: "notifications",

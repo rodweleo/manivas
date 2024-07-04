@@ -1,9 +1,15 @@
-export interface Transaction{
+export type Transaction = {
     userId: string, 
-    transactionId: string,
-    contact: number,
+    receiptNumber: string;
+    phoneNumber: number;
+    merchantRequestId: string;
+    checkoutRequestId: string;
     amount: number,
-    dot: string
+    resultCode: number,
+    transactionDate: number
+    resultDescription: string
+    type: string,
+    receiver: string
 }
 
 export interface User{

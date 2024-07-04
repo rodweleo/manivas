@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase/firebase.config";
 import { useToast } from "@/components/ui/use-toast";
+import axios, { AxiosError } from "axios";
 
 const RegisterUserSchema = z.object({
   firstName: z.string().min(2, {
@@ -59,29 +60,31 @@ export default function Register() {
 
   const onSubmit = async (values: z.infer<typeof RegisterUserSchema>) => {
    try{
-    const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password)
-    await updateProfile(auth.currentUser, {
+    await createUserWithEmailAndPassword(auth, values.email, values.password)
+    await updateProfile(auth.currentUser!, {
       displayName: values.firstName + " " + values.lastName, 
        
     })
 
     //send a verification email to the user
-    await sendEmailVerification(auth.currentUser);
+    await sendEmailVerification(auth.currentUser!);
     toast({
       title: "Account Creation", 
       description: `Good news ${values.firstName}, your account has been created successfully. However, for secure and reliable services, we've sent a verification email to your inbox. Kindly check your inbox to continue enjoying our services.`
     })
     
       
-   }catch(error){
-    const errorCode = error.code;
+   }catch(error: AxiosError | unknown | any ){
+    if(axios.isAxiosError(error)){
+      const errorCode = error.code;
 
-    if(errorCode.includes("email-already-in-use")){
-      toast({
-        variant: "destructive", 
-        title: "Error", 
-        description: "Email address is already in use."
-      })
+      if(errorCode!.includes("email-already-in-use")){
+        toast({
+          variant: "destructive", 
+          title: "Error", 
+          description: "Email address is already in use."
+        })
+      }
     }
    }
   }

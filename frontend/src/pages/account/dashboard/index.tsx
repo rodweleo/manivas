@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TransactionList } from "../../../components/transactions/TransactionList";
 import { Button } from "@/components/ui/button";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GiPayMoney } from "react-icons/gi";
@@ -26,9 +25,12 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label"
 import { IoIosArrowForward } from "react-icons/io";
+import { useUserTransactions } from "@/hooks/useUserTransactions"
+import { TransactionListItem } from "@/components/transactions/TransactionListItem";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
+  const { transactions } = useUserTransactions()
   return (
     <main>
       <article className="space-y-5 h-full">
@@ -40,7 +42,12 @@ export const Dashboard = () => {
           <CardContent>
             <div>
               <h2 className="text-gray-500">Account Balance</h2>
-              <span className="text-xl font-bold">KES 100,000.00</span>
+              <span className="text-xl font-bold">{transactions.reduce((sum, transaction) => {
+                return sum + transaction.amount
+              }, 0).toLocaleString("en-us", {
+                style: "currency", 
+                currency: "KES"
+              })}</span>
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
@@ -139,7 +146,11 @@ export const Dashboard = () => {
         </section>
         <section className="w-full space-y-2 h-full flex flex-col justify-between">
           <h2 className="font-bold text-xl">Transactions</h2>
-          <TransactionList />
+          <ul className="space-y-2 p-1 divide-y-0">
+            {transactions.map((transaction) => {
+                return <li className="w-full"><TransactionListItem transaction={transaction}/></li>
+            })}
+        </ul>
         </section>
       </article>
     </main>

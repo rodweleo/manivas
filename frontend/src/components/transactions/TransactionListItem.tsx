@@ -1,39 +1,14 @@
+import { Transaction } from "@/utils/interfaces"
 import moment from "moment"
 
-interface TransactionProps {
-    tId: string,
-    partyB: string | number,
-    type: string | number,
-    timestamp: string,
-    amount: number
-}
-export const TransactionListItem = ({ transaction }: {
-    transaction: TransactionProps
+export const TransactionListItem = ({ transaction} : {
+    transaction: Transaction
 }) => {
-    const status = "1"
-
-    let contentText = "";
-    let className = ""
-    switch (status) {
-        case "1":
-            className = "bg-green-500/20 text-green-500 border border-green-500"
-            contentText = "Completed"
-            break
-        default:
-            className = "text-black"
-            break;
-    }
-    return <div className="flex justify-between items-center" key={transaction.tId}>
-        <div className="flex gap-2">
-            <img src="https://th.bing.com/th/id/OIP.L1dgSDIjuIZAZvEAf5_cMgHaHa?rs=1&pid=ImgDetMain" alt="" width="50px" className="rounded-full p-1 bg-black shadow-inner shadow-green-400" />
-            <ul>
-                <li>{transaction.partyB}</li>
-                <li className="text-sm text-gray-500"><small>{moment(transaction.timestamp).format('LLL')}</small></li>
-            </ul>
-        </div>
-        <ul className="space-y-1">
-            <li><span className={`${transaction.type === "0" ? "deposit" : "withdraw"} font-bold`}>{transaction.type === "1" ? "+" : "-"} KES {transaction.amount}</span></li>
-            <li><span className={`${className} px-4 py-1 rounded-md font-bold`}>{contentText}</span></li>
+    return <div className={`flex justify-between px-2 border-l-4 ${transaction.type === "deposit" ? "border-green-500" : "border-red-500"}`}>
+        <ul>
+            <li><h2 className="font-semibold">{transaction.receiver}</h2></li>
+            <li><span className="text-gray-500">{moment(transaction.transactionDate).format("HH:mm:ss")}</span></li>        
         </ul>
+        <span className={`px-4 rounded-xl font-semibold ${transaction.type === "deposit" ? "text-green-500 " : "text-red-500"}`}>KES {transaction.amount}</span>
     </div>
 }

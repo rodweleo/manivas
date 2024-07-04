@@ -10,10 +10,10 @@ export const useWindowDimensions = () => {
         height: window.innerHeight
     })
 
-    const handleWindowResizing = (e: UIEvent) => {
+    const handleWindowResizing = (e: any) => {
         setDimensions({
-            width: Number(e.target?.innerWidth),
-            height: Number(e.target?.innerHeight),
+            width: e.currentTarget.innerWidth,
+            height: e.currentTarget.innerHeight,
         })
     }
     useEffect(() => {

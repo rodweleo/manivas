@@ -1,6 +1,6 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase.config";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -103,7 +102,7 @@ export const EditProfileForm = () => {
                         type="text"
                         placeholder="John"
                         {...field}
-                        defaultValue={user?.displayName}
+                        defaultValue={user ? user.displayName! : ""}
                       />
                     </FormControl>
                     <FormMessage />
@@ -122,7 +121,7 @@ export const EditProfileForm = () => {
                         placeholder="Doe"
                         {...field}
                         defaultValue={
-                          user?.displayName 
+                          user ? user.displayName! : ""
                         }
                       />
                     </FormControl>
@@ -142,7 +141,7 @@ export const EditProfileForm = () => {
                         type="email"
                         placeholder="abc@example.com"
                         {...field}
-                        defaultValue={user?.email}
+                        defaultValue={user ? user.email! : ""}
                       />
                     </FormControl>
                     <FormMessage />
@@ -159,7 +158,7 @@ export const EditProfileForm = () => {
                       <Input
                         placeholder="##########"
                         {...field}
-                        defaultValue={user?.phoneNumber}
+                        defaultValue={user ? user.phoneNumber! : ""}
                       />
                     </FormControl>
                     <FormMessage />

@@ -63,7 +63,6 @@ export const Login = () => {
       })
       .catch((error) => {
         setIsSubmitting(false);
-        const errorCode = error.code;
         const errorMessage = error.message;
         if (errorMessage.includes("invalid-credential")) {
           toast({

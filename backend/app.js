@@ -121,9 +121,8 @@ app.post("/api/mpesa/callback", async (req, res) => {
   }catch(error){
     console.error(error)
   }
-  //console.log(req.body)
-  //getMpesaCallback(req.body);
-  /*const callBackData = req.body;
+
+  const callBackData = req.body;
 
   const resultCode = callBackData.Body.stkCallback.ResultCode;
   if (resultCode !== 0) {
@@ -132,32 +131,19 @@ app.post("/api/mpesa/callback", async (req, res) => {
     // Send an error response to the frontend
     return res.status(400).json(responseData);
   } else {
-    const body = req.body.Body.stkCallback.CallbackMetadata;
+    const callbackBody = req.body.Body.stkCallback.CallbackMetadata;
 
-    //save the data into th database
-    let sql =
-      "INSERT INTO mpesatransactions (transactionId, contact, amount, dot) VALUES ('" +
-      body.Item[1].Value +
-      "', '" +
-      body.Item[4].Value +
-      "', '" +
-      body.Item[0].Value +
-      "', '" +
-      body.Item[3].Value +
-      "')";
-    conn.query(sql, (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        // Send a success response to the frontend
-        res.status(200).json({ message: "Payment made successfully!" });
-      }
-    });
-  }*/
+    const amount = callbackBody.Item[0].Value
+    const transactionReceiptNumber = callbackBody.Item[1].Value
+    const transactionDate = callbackBody.Item[3].Value
+    const phoneNumber = callbackBody.Item[4].Value
 
-  const tId = uuidv4();
+    const checkoutRequestId = req.body.Body.stkCallback.CheckoutRequestID;
+    const merchantRequestId = req.body.Body.stkCallback.MerchantRequestID;
+    const resultCode = req.body.Body.stkCallback.ResultCode;
+    const resultDescription = req.body.Body.stkCallback.ResultDesc;
+  }
 
-  console.log(req.body);
 });
 
 /*INTEGRATING WITH BINANCE SERVER*/

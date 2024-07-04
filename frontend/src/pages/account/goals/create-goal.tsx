@@ -35,7 +35,8 @@ import { Calendar } from "@/components/ui/calendar"
 const CreateGoalFormSchema = z.object({
   name: z.string().min(2).max(50),
   type: z.string(),
-  amount: z.number()
+  amount: z.number(),
+  targetDate: z.date()
 });
 
 export const CreateGoalForm = () => {

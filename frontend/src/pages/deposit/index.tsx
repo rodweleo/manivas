@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -20,8 +20,6 @@ import {
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { Badge } from "@/components/ui/badge";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/firebase/firebase.config";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
@@ -33,7 +31,7 @@ const userData = {
   goal: 100000,
 };
 export const Deposit = () => {
-  const [steps, setSteps] = useState(1);
+  const [steps, setSteps] = useState(3);
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
   const model = genAI.getGenerativeModel({
@@ -110,24 +108,21 @@ export const Deposit = () => {
                 variations
               </CardDescription>
             </CardHeader>
-            <CardFooter className="flex items-center justify-between">
+            <CardContent className="flex items-center justify-between">
               <div className="text-center">
-                <h3 className="font-bold">KES 35.52K</h3>
-                <span className="text-xs text-slate-500">Income</span>
+                  <h3 className="font-bold">KES 35.52K</h3>
+                  <span className="text-xs text-slate-500">Income</span>
+                </div>
+                <div className="text-center">
+                  <h3 className="font-bold">KES 16.52K</h3>
+                  <span className="text-xs text-slate-500">Outcome</span>
               </div>
-              <div className="text-center">
-                <h3 className="font-bold">KES 16.52K</h3>
-                <span className="text-xs text-slate-500">Outcome</span>
-              </div>
+            </CardContent>
+            <CardFooter >
+              <Button onClick={() => run()}>Ask AI</Button>
             </CardFooter>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle></CardTitle>
-            </CardHeader>
-            <CardContent></CardContent>
-          </Card>
         </section>
       )}
 
@@ -196,14 +191,17 @@ const DepositForm = () => {
         description: response.data.CustomerMessage
       })
 
-    } catch (error) {
+    } catch (error: AxiosError | any | unknown) {
       setPaymentInProgress(false)
-      toast({
-        variant: "destructive",
-        title: error.message,
-        description: error.message,
-      });
-      console.log(error);
+      if(axios.isAxiosError(error)){
+        toast({
+          variant: "destructive",
+          title: error.message,
+          description: error.message,
+        });
+        console.log(error);
+      }
+
     }
   };
 
