@@ -22,9 +22,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import { auth } from "@/firebase/firebase.config";
 import { useToast } from "@/components/ui/use-toast";
 import axios, { AxiosError } from "axios";
+import { auth } from "@/firebase/firebase.config";
 
 const RegisterUserSchema = z.object({
   firstName: z.string().min(2, {

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { auth, db } from "@/firebase/firebase.config";
+import { db } from "@/firebase/firebase.config";
 import { Transaction } from "@/utils/interfaces";
+import { getAuth } from "firebase/auth";
 
 export const useUserTransactions = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([])
-
+    const auth = getAuth()
     useEffect(()=>{
         const q = query(collection(db, "transactions"), where("userId", "==", auth.currentUser?.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
