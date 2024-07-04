@@ -13,10 +13,9 @@ export const AccountLayout = () => {
     const currentLocation = location.pathname.trim().split("/")[1].charAt(0).toUpperCase() + location.pathname.trim().split("/")[1].slice(1, location.pathname.trim().split("/")[1].split("").length)
     useEffect(() => {
         if(auth.currentUser === null){
-            navigate("/login")
+            navigate("/sign-in")
         }
     }, [navigate])
-    
     return (
         <main className="w-full h-screen fixed flex flex-col items-center ">
             <header className="w-full p-1.5 sticky z-50 top-0 h-20 flex justify-between items-center rounded-b-xl">

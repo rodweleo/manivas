@@ -20,6 +20,11 @@ import {
 import { RiDeleteBack2Line } from "react-icons/ri";
 import { Badge } from "@/components/ui/badge";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase/firebase.config";
+import ClipLoader from "react-spinners/ClipLoader";
+
+
 
 const GEMINI_API_KEY = "AIzaSyDxqIKsDNxoHHedaXqKVXGdRDb4F4d4cWo";
 
@@ -28,7 +33,7 @@ const userData = {
   goal: 100000,
 };
 export const Deposit = () => {
-  const [steps, setSteps] = useState(3);
+  const [steps, setSteps] = useState(1);
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
   const model = genAI.getGenerativeModel({
@@ -134,7 +139,7 @@ export const Deposit = () => {
         >
           Back
         </Button>
-        <Button className="rounded-full w-32" onClick={run()}>
+        <Button className="rounded-full w-32">
           Continue
         </Button>
       </section>
@@ -143,7 +148,8 @@ export const Deposit = () => {
 };
 
 const DepositForm = () => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number[]>([]);
+  const [paymentInProgress, setPaymentInProgress] = useState(false)
   const { handleSubmit } = useForm();
   const { toast } = useToast();
   const keypad_numbers = [
@@ -164,32 +170,44 @@ const DepositForm = () => {
   const handleKeypadClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const btnValue = Number(e.currentTarget.innerHTML);
-    setAmount(Number(amount + "" + btnValue));
-  };
+    if(e.currentTarget.innerText === ""){
+      const amountCopy = [...amount];
+      amountCopy.pop();
+      setAmount(amountCopy)
 
-  const deleteEntry = () => {
-    if (amount && amount.toString().split("").length > 0) {
-      setAmount(
-        Number(amount.toString().slice(0, amount.toString().length - 1))
-      );
+    }else{
+      setAmount([...amount, Number(e.currentTarget.innerText)])
     }
   };
+
+
   const topUp = async () => {
+    setPaymentInProgress(true)
     try {
       const response = await axios.post(
-        "https://491e-197-232-40-98.ngrok-free.app/api/mpesa/stkPush",
-        {
-          phoneNumber: 254795565344,
-          amount: amount,
-        }
+        "https://api-manivas.vercel.app/api/mpesa/stkPush",
+       {
+        phoneNumber: 254795565344,
+        amount: amount
+       }
       );
-      console.log(response);
+      setPaymentInProgress(false)
+      toast({
+        description: response.data.CustomerMessage
+      })
+
+      
+      const docRef = await addDoc(collection(db, "transactions"), {
+        body: "Hello"
+      })
+
+      console.log(docRef)
     } catch (error) {
+      setPaymentInProgress(false)
       toast({
         variant: "destructive",
         title: error.message,
-        description: "Sorry, something went wrong. Try again later.",
+        description: error.message,
       });
       console.log(error);
     }
@@ -202,11 +220,7 @@ const DepositForm = () => {
     >
       <h1 className="font-bold text-xl flex items-center">
         <span className="text-gray-300 text-xl">KES</span> &nbsp;
-        {amount &&
-          amount.toLocaleString("en-us", {
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 2,
-          })}
+        {amount.join("")}
       </h1>
       <div className="flex flex-col items-center gap-5">
         <div className="flex flex-col items-center gap-5">
@@ -223,7 +237,7 @@ const DepositForm = () => {
             ))}
           </div>
         </div>
-        <Button className="w-full">Deposit {amount > 0 && amount}</Button>
+        <Button className="w-full">{paymentInProgress ? <ClipLoader color="white" size={20}/> : "Deposit" + amount.join("")}</Button>
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase.config";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -31,8 +31,8 @@ const EditProfileSchema = z.object({
   phoneNumber: z.string().regex(/^\+\d{1,15}$/),
 });
 export const EditProfileForm = () => {
+  const user = auth.currentUser
   const [showPrompt, setShowPromptDialog] = useState(false);
-  const user = auth.currentUser;
   const navigate = useNavigate();
   const galleryBtnRef = useRef<HTMLInputElement | null>(null);
   const cameraBtnRef = useRef<HTMLInputElement | null>(null);
@@ -61,8 +61,6 @@ export const EditProfileForm = () => {
 
   return (
     <section className="p-5">
-      <div></div>
-
       <Form {...EditProfileForm}>
         <Card>
           <CardHeader>
@@ -105,7 +103,7 @@ export const EditProfileForm = () => {
                         type="text"
                         placeholder="John"
                         {...field}
-                        defaultValue={user?.displayName?.split(" ")[0]}
+                        defaultValue={user?.displayName}
                       />
                     </FormControl>
                     <FormMessage />
@@ -124,9 +122,7 @@ export const EditProfileForm = () => {
                         placeholder="Doe"
                         {...field}
                         defaultValue={
-                          user?.displayName !== null &&
-                          user?.displayName.split(" ").length > 2 &&
-                          user?.displayName?.split(" ")[1]
+                          user?.displayName 
                         }
                       />
                     </FormControl>
@@ -144,7 +140,7 @@ export const EditProfileForm = () => {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="shadcn"
+                        placeholder="abc@example.com"
                         {...field}
                         defaultValue={user?.email}
                       />

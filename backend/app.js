@@ -80,10 +80,9 @@ app.post("/api/mpesa/accountbalance/result", (req, res) => {
 
 
 //initiating the stkPush
-app.get("/api/mpesa/stkPush", async (req, res) => {
-  //const { phoneNumber, amount } = req.body;
-  const phoneNumber = "254795565344"
-  const amount = 1;
+app.post("/api/mpesa/stkPush", async (req, res) => {
+  const { phoneNumber, amount } = req.body;
+
   const { access_token } = await generateAccessToken();
   const timestamp = moment().format("YYYYMMDDHHmmss");
   const password = btoa(
@@ -98,7 +97,7 @@ app.get("/api/mpesa/stkPush", async (req, res) => {
     PartyA: phoneNumber,
     PartyB: process.env.MPESA_SHORT_CODE,
     PhoneNumber: phoneNumber,
-    CallBackURL: process.env.MPESA_CALLBACK,
+    CallBackURL: process.env.SERVER_BASE_URL +"/api/mpesa/callback",
     AccountReference: "Manivas Co-operation",
     TransactionDesc: "Test",
   };
@@ -121,7 +120,11 @@ app.get("/api/mpesa/stkPush", async (req, res) => {
   }
 });
 
-app.post("/api/mpesa/callback", (req, res) => {
+app.post("/api/mpesa/callback", async (req, res) => {
+  const docRef = await addDoc(collection(db, "transactions"), {
+    body: req.body
+  })
+  console.log(req.body)
   //getMpesaCallback(req.body);
   /*const callBackData = req.body;
 
