@@ -97,7 +97,7 @@ app.post("/api/mpesa/stkPush", async (req, res) => {
     PartyA: phoneNumber,
     PartyB: process.env.MPESA_SHORT_CODE,
     PhoneNumber: phoneNumber,
-    CallBackURL: process.env.SERVER_BASE_URL +"/api/mpesa/callback",
+    CallBackURL: `${process.env.SERVER_BASE_URL}/api/mpesa/callback`,
     AccountReference: "Manivas Co-operation",
     TransactionDesc: "Test",
   };
