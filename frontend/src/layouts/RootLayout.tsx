@@ -117,8 +117,8 @@ const MobileNav = () => {
             <ul className="flex flex-col gap-5">
               <li>
                 <NavLink
-                  className="nav-link font-bold "
-                  to="/login"
+                  className="font-bold "
+                  to="/sign-in"
 
                 >
                   <Button variant="outline" className="w-full">Login</Button>
@@ -189,8 +189,8 @@ const WebNav = () => {
   <ul className="flex gap-5">
     <li>
       <NavLink
-        className="nav-link font-bold "
-        to="/login"
+        className="font-bold "
+        to="/sign-in"
 
       >
         <Button variant="outline" className="w-full">Login</Button>

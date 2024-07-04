@@ -44,7 +44,7 @@ export const Home = () => {
         <section className="p-5 bg-gradient-to-r from-blue-100 via-white to-blue-100 ease-in-out duration-300 space-y-4 w-full flex items-center justify-center min-h-screen">
           <div className="space-y-5 max-w-[900px] text-center">
             <Button className="rounded-full " variant="outline">Manivas 1.0 Public <CgChevronRight /></Button>
-            <h1 className="font-bold text-7xl leading-snug">
+            <h1 className="font-bold text-5xl leading-snug">
               Simplifying <span className="text-blue-500">Payments</span> for Growing 
               <span className="text-blue-500"> Business</span>
             </h1>

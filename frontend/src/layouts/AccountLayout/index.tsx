@@ -41,7 +41,7 @@ export const AccountLayout = () => {
             <nav id="account-main-nav-bar" className="w-full border border-t-1 flex justify-between p-5 bottom-0 sticky">
                 <NavLink to="dashboard"><i className="fa-solid fa-home"></i> <span> Home</span></NavLink>
                 <NavLink to="history"><i className="fa-solid fa-history"></i> <span> History</span></NavLink>
-                <NavLink to="profile"> <img src={user?.photoURL} alt={`${user?.displayName}'s Avatar`} width="15px" className="rounded-full shadow-lg shadow-green-500" /> <span> Profile</span></NavLink>
+                <NavLink to="profile"> <img src={user?.photoURL ? user.photoURL : "/images/Profile Avatar Placeholder.png"} alt="" width="15px" className="rounded-full shadow-lg shadow-green-500" /> <span> Profile</span></NavLink>
             </nav>
         </main >
     )

@@ -20,13 +20,13 @@ export const Profile = () => {
         <section className="flex flex-col items-center">
           <div className="relative flex flex-col items-center">
               <img
-                src={user?.photoURL}
+                src={user?.photoURL ? user.photoURL : "/images/Profile Avatar Placeholder.png"}
                 alt={`${user?.displayName}'s Avatar`}
                 width="100px"
                 className="rounded-full shadow-lg shadow-green-500"
               />
               <h1 className="text-xl font-semibold">{user?.displayName}</h1>
-              <p>A Professional App Developer</p>
+              
               <Form action="edit" className="w-full mt-5">
                 <Button className="rounded-full w-full" type="submit">Edit Profile</Button>
               </Form>

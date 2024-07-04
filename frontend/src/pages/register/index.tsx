@@ -21,6 +21,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { auth } from "@/firebase/firebase.config";
+import { useToast } from "@/components/ui/use-toast";
 
 const RegisterUserSchema = z.object({
   firstName: z.string().min(2, {
@@ -32,28 +35,61 @@ const RegisterUserSchema = z.object({
   email: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }).email(),
-  phoneNumber: z.number()
- 
+  phoneNumber: z.string().regex(/^\+\d{1,15}$/),
+  password: z.string().min(8, {
+    message: "Password is too short"
+  })
 });
 
 export default function Register() {
   document.title =
     "Welcome to Manivas | Your Gateway to a Digital Financial World";
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof RegisterUserSchema>>({
+  const { toast } = useToast()
+  const RegisterForm = useForm<z.infer<typeof RegisterUserSchema>>({
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
-      phoneNumber: 0
+      phoneNumber: "",
+      password: ""
     },
   });
 
+  const onSubmit = async (values: z.infer<typeof RegisterUserSchema>) => {
+   try{
+    const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password)
+    await updateProfile(auth.currentUser, {
+      displayName: values.firstName + " " + values.lastName, 
+       
+    })
+
+    //send a verification email to the user
+    await sendEmailVerification(auth.currentUser);
+    toast({
+      title: "Account Creation", 
+      description: `Good news ${values.firstName}, your account has been created successfully. However, for secure and reliable services, we've sent a verification email to your inbox. Kindly check your inbox to continue enjoying our services.`
+    })
+    
+      
+   }catch(error){
+    const errorCode = error.code;
+
+    if(errorCode.includes("email-already-in-use")){
+      toast({
+        variant: "destructive", 
+        title: "Error", 
+        description: "Email address is already in use."
+      })
+    }
+   }
+  }
+  
   return (
     <main className="min-h-screen flex items-center justify-center p-3">
-      <Form {...form}>
-        <form method="POST">
+      <Form {...RegisterForm}>
+        <form onSubmit={RegisterForm.handleSubmit(onSubmit)}>
           <Card className="max-w-[800px]">
             <CardHeader>
               <CardTitle>Create Account</CardTitle>
@@ -63,7 +99,7 @@ export default function Register() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormField
-                control={form.control}
+                control={RegisterForm.control}
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
@@ -77,7 +113,7 @@ export default function Register() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={RegisterForm.control}
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
@@ -90,7 +126,7 @@ export default function Register() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={RegisterForm.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -104,7 +140,7 @@ export default function Register() {
                 )}
               />
               <FormField
-                control={form.control}
+                control={RegisterForm.control}
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
@@ -117,9 +153,23 @@ export default function Register() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={RegisterForm.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="********" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </CardContent>
-            <CardFooter className="flex flex-col space-y-5">
-              <Button className="disabled:cursor-not-allowed" disabled>
+            <CardFooter className="flex flex-col items-start space-y-5">
+              <Button className="disabled:cursor-not-allowed">
                 Create Account
               </Button>
 

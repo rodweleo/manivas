@@ -47,10 +47,9 @@ const generateAccessToken = async () => {
 };
 
 app.get("/", async (req, res) => {
-  const { access_token } = await generateAccessToken();
-  res.send(uuidv4());
+  res.send('Manivas Co-operation server is live.')
 
-  const response = await axios.post(
+  /*const response = await axios.post(
     `${process.env.MPESA_BASE_URL}/mpesa/accountbalance/v1/query`,
     {
       Initiator: "Manivas_Developer",
@@ -70,7 +69,7 @@ app.get("/", async (req, res) => {
     }
   );
 
-  console.log(response.data);
+  console.log(response.data);*/
 });
 
 app.post("/api/mpesa/accountbalance/queuetimeouturl", (req, res) => {
@@ -165,8 +164,10 @@ app.post("/transactions", (req, res) => {
 });
 
 //initiating the stkPush
-app.post("/api/mpesa/stkPush", async (req, res) => {
-  const { phoneNumber, amount } = req.body;
+app.get("/api/mpesa/stkPush", async (req, res) => {
+  //const { phoneNumber, amount } = req.body;
+  const phoneNumber = "254795565344"
+  const amount = 1;
   const { access_token } = await generateAccessToken();
   const timestamp = moment().format("YYYYMMDDHHmmss");
   const password = btoa(
@@ -182,7 +183,7 @@ app.post("/api/mpesa/stkPush", async (req, res) => {
     PartyB: process.env.MPESA_SHORT_CODE,
     PhoneNumber: phoneNumber,
     CallBackURL: process.env.MPESA_CALLBACK,
-    AccountReference: "Manivas Pool Services",
+    AccountReference: "Manivas Co-operation",
     TransactionDesc: "Test",
   };
 
@@ -258,8 +259,9 @@ binance.balance((error, balances)=>{
 */
 
 //API TO SEND MAIL
-app.post("/api/v1/sendMessage", (req, res) => {
-  const { email } = req.body;
+app.get("/api/v1/mail/sendMail", (req, res) => {
+  //const { email } = req.body;
+  const email = "leorodwel86@gmail.com"
 
   // Create a SMTP transporter
   const transporter = nodemailer.createTransport({
@@ -277,40 +279,7 @@ app.post("/api/v1/sendMessage", (req, res) => {
     from: "verify@manivas.com",
     to: email,
     subject: "Test Email",
-    html: `<p>Dear&nbsp;<span style="color: rgb(35, 111, 161);"><strong>{{user}}</strong></span>,</p>
-<p>We are thrilled to inform you that your tickets for&nbsp;<strong><span style="color: rgb(35, 111, 161);">{{event}}</span></strong> have been successfully reserved. Below, you will find all the details pertaining to your ticket purchase:</p>
-<p><strong>Event Details:</strong></p>
-<ul>
-<li>Event: <span style="color: rgb(35, 111, 161);"><strong>{{event}}</strong></span></li>
-<li>Date: <span style="color: rgb(35, 111, 161);"><strong>{{date}}</strong></span></li>
-<li>Time: <span style="color: rgb(35, 111, 161);"><strong>{{from_time}} - {{to_time}}</strong></span></li>
-<li>Location: <span style="color: rgb(35, 111, 161);"><strong>{{location}}</strong></span></li>
-</ul>
-<p><strong>Ticket Details:</strong></p>
-<ul>
-<li>Regular Tickets: <span style="color: rgb(35, 111, 161);"><strong>{{regularTickets}}</strong></span></li>
-<li>VIP Tickets: <span style="color: rgb(35, 111, 161);"><strong>{{vipTickets}}</strong></span></li>
-</ul>
-<p><strong>Pricing:</strong></p>
-<ul>
-<li>Regular Ticket Price: <span style="color: rgb(35, 111, 161);"><strong>{{regularTicketPrice}}</strong></span></li>
-<li>VIP Ticket Price: <span style="color: rgb(35, 111, 161);"><strong>{{vipTicketPrice}}</strong></span></li>
-<li>Total Amount: <span style="color: rgb(35, 111, 161);"><strong>{{totalAmount}}</strong></span></li>
-</ul>
-<p>Please note that payment can be made at the event entrance or through our online payment portal.</p>
-<p>We look forward to welcoming you to&nbsp;<span style="color: rgb(35, 111, 161);"><strong>{{event}}</strong></span>, where an unforgettable journey awaits! Should you have any further inquiries or require assistance, please do not hesitate to contact us at <span style="color: rgb(35, 111, 161);"><strong>theeventvista@gmail.com</strong></span>.</p>
-<p>Thank you for choosing to be a part of this extraordinary event!</p>
-<p>&nbsp;</p>
-<p>Best Regards,</p>
-<p><strong>EventVista,</strong></p>
-<p><span style="background-color: rgb(255, 255, 255); color: rgb(35, 111, 161);"><em><strong>Where Every Moment Shines!</strong></em></span></p>`,
-    attachments: [
-      {
-        filename: "text.txt",
-        path: "public/downloads/text.txt",
-        contextType: "application/text",
-      },
-    ],
+    html: 'Hello'
   };
 
   // Send email
@@ -319,7 +288,7 @@ app.post("/api/v1/sendMessage", (req, res) => {
       console.error(error);
       res.status(500).json({
         status: false,
-        response: error,
+        ...error,
       });
     } else {
       res.status(200).json({
