@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { ThreeDots } from "react-loader-spinner";
-import TextField from "../ui/TextField";
-import { IconButton } from "../ui/icon_button";
 import axios from "axios";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -39,15 +35,14 @@ export const NewsLetterForm = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            Get the latest news from{" "}
-            <span className="text-green-700">Manivas</span>
+            Get the latest news from Manivas
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Input placeholder="abc@example.com" type="email" />
         </CardContent>
         <CardFooter>
-          <Button className="bg-deep-blue">Subscribe</Button>
+          <Button className="disabled:cursor-not-allowed" disabled>Subscribe</Button>
         </CardFooter>
       </Card>
     </>

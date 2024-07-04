@@ -29,6 +29,7 @@ export const TransactionList = () => {
     useEffect(() => {
         fetchTransactions()
     }, [])
+    
     return <ul className="w-full">
         {transactions.map((transaction) => (
             <TransactionListItem transaction={transaction} />

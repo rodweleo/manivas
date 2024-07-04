@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CgChevronRight } from "react-icons/cg";
+import { useNavigate } from "react-router";
 
 const FEATURES = [
   {
@@ -35,37 +37,24 @@ const FEATURES = [
   },
 ];
 export const Home = () => {
+  const navigate = useNavigate()
   return (
     <main id="hero" className="min-h-screen">
       <article>
-        <section className="p-5 bg-blue-400 space-y-4 w-full flex items-center min-h-screen text-white">
-          <div className="space-y-4">
-            <p className="font-bold bg-white py-2 px-8 w-fit rounded-full shadow-lg text-black">
-              &#129395; Manivas
-            </p>
-            <h1 className="font-bold text-5xl leading-snug">
-              Manage Your <span className="text-green-600">Money</span> Transfer
-              Efficiently
+        <section className="p-5 bg-gradient-to-r from-blue-100 via-white to-blue-100 ease-in-out duration-300 space-y-4 w-full flex items-center justify-center min-h-screen">
+          <div className="space-y-5 max-w-[900px] text-center">
+            <Button className="rounded-full " variant="outline">Manivas 1.0 Public <CgChevronRight /></Button>
+            <h1 className="font-bold text-7xl leading-snug">
+              Simplifying <span className="text-blue-500">Payments</span> for Growing 
+              <span className="text-blue-500"> Business</span>
             </h1>
-
-            <ul className="flex">
-              <li>
-                <Button
+            <p className="font-semibold text-slate-500 ma-w-[]">Become an expert in your data, create a dashboard for your team and bring them together.</p>
+            <Button
                   variant="default"
-                  className="rounded-full w-[200px] bg-white text-black font-bold hover:bg-light-blue"
+                  onClick={() => navigate("/sign-up")}
                 >
                   Get Started
                 </Button>
-              </li>
-              <li>
-                <Button
-                  variant="link"
-                  className="font-bold hover:text-deep-blue text-white"
-                >
-                  Learn More
-                </Button>
-              </li>
-            </ul>
           </div>
         </section>
         <section className="p-5 min-h-screen flex  items-center">
@@ -125,9 +114,9 @@ export const Home = () => {
             </ul>
           </div>
         </section>
-        <section className="p-5 min-h-screen text-center space-y-5">
-          <h1 className="text-3xl font-bold">All the Features you need</h1>
-          <p className="text-slate-500">
+        <section className="p-5 min-h-screen text-center flex flex-col items-center space-y-5">
+          <h1 className="text-3xl font-bold">Our Key Features</h1>
+          <p className="text-slate-500 max-w-[700px]">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
             debitis tempore ex nemo totam minima nostrum ipsa aliquid voluptatem
             sit illo quo id nesciunt aut ducimus, incidunt iure, sint ipsum.

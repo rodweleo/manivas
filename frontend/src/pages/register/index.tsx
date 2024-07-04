@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import TextField from "../../components/ui/TextField";
+import { useNavigate } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
-import { IconButton } from "../../components/ui/icon_button";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -26,10 +23,17 @@ import {
 import { Input } from "@/components/ui/input";
 
 const RegisterUserSchema = z.object({
-  username: z.string().min(2, {
+  firstName: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  password: z.string(),
+  lastName: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }).email(),
+  phoneNumber: z.number()
+ 
 });
 
 export default function Register() {
@@ -39,8 +43,10 @@ export default function Register() {
   const form = useForm<z.infer<typeof RegisterUserSchema>>({
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: 0
     },
   });
 
@@ -48,7 +54,7 @@ export default function Register() {
     <main className="min-h-screen flex items-center justify-center p-3">
       <Form {...form}>
         <form method="POST">
-          <Card className="w-[500px]">
+          <Card className="max-w-[800px]">
             <CardHeader>
               <CardTitle>Create Account</CardTitle>
               <CardDescription>
@@ -58,12 +64,12 @@ export default function Register() {
             <CardContent className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input placeholder="abc@example.com" {...field} />
+                      <Input type="text" placeholder="John" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -72,26 +78,25 @@ export default function Register() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="lastName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input placeholder="abc@example.com" {...field} />
+                      <Input type="text" placeholder="Doe" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="abc@example.com" {...field} />
+                      <Input type="email" placeholder="abc@example.com" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -100,12 +105,12 @@ export default function Register() {
               />
               <FormField
                 control={form.control}
-                name="username"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="abc@example.com" {...field} />
+                      <Input type="tel" placeholder="2547********" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -113,10 +118,14 @@ export default function Register() {
                 )}
               />
             </CardContent>
-            <CardFooter>
-              <Button className="bg-deep-blue hover:bg-light-blue text-white">
+            <CardFooter className="flex flex-col space-y-5">
+              <Button className="disabled:cursor-not-allowed" disabled>
                 Create Account
               </Button>
+
+              <div>
+                <p>Already have an account ? <Button variant="link" className="font-bold" type="button" onClick={() => navigate("/sign-in")}>Sign In</Button></p>
+              </div>
             </CardFooter>
           </Card>
         </form>

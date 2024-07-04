@@ -26,9 +26,9 @@ export const TransactionListItem = ({ transaction }: {
     return <div className="flex justify-between items-center" key={transaction.tId}>
         <div className="flex gap-2">
             <img src="https://th.bing.com/th/id/OIP.L1dgSDIjuIZAZvEAf5_cMgHaHa?rs=1&pid=ImgDetMain" alt="" width="50px" className="rounded-full p-1 bg-black shadow-inner shadow-green-400" />
-            <ul className="space-y-1">
-                <li className="text-slate-200 text-md"><strong>{transaction.partyB}</strong></li>
-                <li className="text-slate-400 font-bold text-sm"><small>{moment(transaction.timestamp).format('LLL')}</small></li>
+            <ul>
+                <li>{transaction.partyB}</li>
+                <li className="text-sm text-gray-500"><small>{moment(transaction.timestamp).format('LLL')}</small></li>
             </ul>
         </div>
         <ul className="space-y-1">

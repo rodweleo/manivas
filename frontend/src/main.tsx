@@ -15,16 +15,20 @@ import { HowToUse } from "./pages/how-to-use/index.tsx";
 import { WhyManivas } from "./pages/why-manivas/index.tsx";
 import { Help } from "./pages/help/index.tsx";
 import { ContactUs } from "./pages/contact-us/index.tsx";
-import { TopUp } from "./pages/topup/index.tsx";
+import { Deposit } from "./pages/deposit/index.tsx";
 import { AccountLayout } from "./layouts/AccountLayout/index.tsx";
 import { Notifications } from "./pages/notifications/index.tsx";
 import { Toaster } from "@/components/ui/toaster";
+import { ResetPassword } from "./pages/reset-password/index.tsx";
+import { ErrorBoundary } from "./components/ui/error-boundary.tsx";
+import { CreateGoalForm } from "./pages/account/goals/create-goal.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     loader: rootLoader,
+    errorElement: <ErrorBoundary/>,
     children: [
       {
         path: "/",
@@ -47,12 +51,16 @@ const router = createBrowserRouter([
         element: <ContactUs />,
       },
       {
-        path: "login",
+        path: "sign-in",
         element: <Login />,
       },
       {
-        path: "register",
+        path: "sign-up",
         element: <Register />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
       },
     ],
   },
@@ -69,8 +77,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "topup",
-        element: <TopUp />,
+        path: "deposit",
+        element: <Deposit />,
       },
       {
         path: "history",
@@ -85,6 +93,15 @@ const router = createBrowserRouter([
         element: <EditProfileForm />,
         loader: profileLoader,
       },
+      {
+        path: "goals/*", 
+        children: [
+          {
+            path: "create-goal",
+            element: <CreateGoalForm/>
+          }
+        ]
+      }
     ],
   },
 ]);

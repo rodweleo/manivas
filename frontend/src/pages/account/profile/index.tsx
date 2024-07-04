@@ -1,6 +1,8 @@
-import { Form, NavLink, useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase.config";
-import { ProfileMenuListItem } from "@/components/profile/widgets/ProfileMenuListItem";
+import { Button } from "@/components/ui/button";
+import { GiStairsGoal } from "react-icons/gi";
+import { IoIosArrowForward } from "react-icons/io";
 
 export const Profile = () => {
   const user = auth.currentUser;
@@ -13,37 +15,34 @@ export const Profile = () => {
     });
   };
   return (
-    <section className="w-full h-full flex flex-col justify-between gap-5 p-5">
-      <ul className="space-y-10 flex flex-col items-center w-full">
-        <li>
-          <div className="relative">
-            <img
-              src="https://cdn.pixabay.com/photo/2023/02/08/14/02/ai-generated-7776701_640.jpg"
-              alt={`${user?.displayName}'s Avatar`}
-              width="150px"
-              className="rounded-full shadow-lg shadow-green-500"
-            />
-            <Form action="edit">
-              <button className="absolute -right-2 bottom-5">
-                <i className="fa-solid fa-pen text-white bg-green-500 rounded-full border-2 border-white p-3"></i>
-              </button>
-            </Form>
-          </div>
-        </li>
+    <main className="w-full h-full flex flex-col">
+      <article className="space-y-5">
+        <section className="flex flex-col items-center">
+          <div className="relative flex flex-col items-center">
+              <img
+                src={user?.photoURL}
+                alt={`${user?.displayName}'s Avatar`}
+                width="100px"
+                className="rounded-full shadow-lg shadow-green-500"
+              />
+              <h1 className="text-xl font-semibold">{user?.displayName}</h1>
+              <p>A Professional App Developer</p>
+              <Form action="edit" className="w-full mt-5">
+                <Button className="rounded-full w-full" type="submit">Edit Profile</Button>
+              </Form>
+            </div>
+        </section>
+        <section>
+          <ul className="divide-y">
+            <li><Button type="button" variant="link" className="w-full flex justify-between" onClick={() => navigate("/account/goals/create-goal")}><div className="flex items-center gap-1"><GiStairsGoal /> Create a Goal</div> <IoIosArrowForward /></Button></li>
+            <li><Button onClick={() => signOut()} variant="link">Sign Out</Button></li>
+          </ul>
+        </section>
+      </article>
+      
+      
 
-        <li className="w-full">
-          <NavLink to="/account/support" className="w-full">
-            <ProfileMenuListItem label="Support" icon="fa-solid fa-phone" />
-          </NavLink>
-        </li>
-      </ul>
-
-      <button
-        className="bg-red-200 text-red-400 font-bold text-xl py-2 rounded-md"
-        onClick={() => signOut()}
-      >
-        Sign Out
-      </button>
-    </section>
+     
+    </main>
   );
 };
