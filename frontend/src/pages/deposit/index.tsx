@@ -21,17 +21,19 @@ import { RiDeleteBack2Line } from "react-icons/ri";
 import { Badge } from "@/components/ui/badge";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ClipLoader from "react-spinners/ClipLoader";
+import { IoIosArrowBack } from "react-icons/io";
 
 
-
-const GEMINI_API_KEY = "AIzaSyDxqIKsDNxoHHedaXqKVXGdRDb4F4d4cWo";
 
 const userData = {
   income: 1000,
   goal: 100000,
 };
+
+
 export const Deposit = () => {
-  const [steps, setSteps] = useState(3);
+  const [steps, setSteps] = useState<number>(1);
+  const GEMINI_API_KEY: string = import.meta.env.VITE_GEMINI_API_KEY as string | "AIzaSyDxqIKsDNxoHHedaXqKVXGdRDb4F4d4cWo";
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
   const model = genAI.getGenerativeModel({
@@ -47,11 +49,12 @@ export const Deposit = () => {
     const text = response.text();
     console.log(text);
   }
+  console.log(import.meta.env.VITE_GEMINI_API_KEY)
   return (
     <main className="w-full h-full space-y-4">
       <div>
         <h1 className="font-bold text-xl">Deposit type</h1>
-        <p className="text-slate-500">Step {steps} / 4</p>
+        <p className="text-slate-500">Step {steps} / 2</p>
       </div>
       {steps === 1 && (
         <article>
@@ -60,7 +63,7 @@ export const Deposit = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger>Save for a car</AccordionTrigger>
                 <AccordionContent>
-                  <DepositForm />
+                  <DepositForm setSteps={setSteps}/>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
@@ -96,7 +99,7 @@ export const Deposit = () => {
         </article>
       )}
 
-      {steps === 3 && (
+      {steps === 2 && (
         <section className="space-y-2">
           <Card>
             <CardHeader>
@@ -126,23 +129,23 @@ export const Deposit = () => {
         </section>
       )}
 
-      <section className="flex items-center justify-between">
-        <Button
-          variant="outline"
-          className="rounded-full w-32"
-          onClick={() => setSteps((prev) => prev - 1)}
-        >
-          Back
-        </Button>
-        <Button className="rounded-full w-32">
-          Continue
+      {
+        steps > 1 && <section className="flex items-center justify-between">
+        {steps > 1 && <Button className="w-32 flex items-center gap-2.5" variant="outline" onClick={() => setSteps((prev) => prev - 1)}>
+          <IoIosArrowBack size={12.5}/> <span>Back</span>
+        </Button>}
+        <Button className="w-32">
+          Finish
         </Button>
       </section>
+      }
     </main>
   );
 };
 
-const DepositForm = () => {
+const DepositForm = ({setSteps}:{
+  setSteps: React.Dispatch<React.SetStateAction<number>>
+}) => {
   const [amount, setAmount] = useState<number[]>([]);
   const [paymentInProgress, setPaymentInProgress] = useState(false)
   const { handleSubmit } = useForm();
@@ -205,6 +208,10 @@ const DepositForm = () => {
     }
   };
 
+  const inc = () => {
+    setSteps(2)
+  }
+
   return (
     <form
       onSubmit={handleSubmit(topUp)}
@@ -229,7 +236,7 @@ const DepositForm = () => {
             ))}
           </div>
         </div>
-        <Button className="w-full">{paymentInProgress ? <ClipLoader color="white" size={20}/> : "Deposit " + amount.join("")}</Button>
+        <Button className="w-full" type="button" onClick={() => inc()}>{paymentInProgress ? <ClipLoader color="white" size={20}/> : "Deposit " + amount.join("")}</Button>
       </div>
     </form>
   );

@@ -71,9 +71,6 @@ export const Dashboard = () => {
           <Button className="rounded-full flex items-center gap-2">
             <TbPigMoney /> Save
           </Button>
-          <Button className="rounded-full flex items-center gap-2" onClick={() => navigate("/account/deposit")}>
-                <PiHandDepositLight /> Deposit
-              </Button>
           <Drawer>
             <DrawerTrigger asChild>
               <Button className="rounded-full flex items-center gap-2">
@@ -99,7 +96,7 @@ export const Dashboard = () => {
                 </div>
                 <DrawerFooter>
                   <DrawerClose asChild>
-                    <Button>Continue</Button>
+                    <Button onClick={() => navigate("/account/deposit")} >Continue</Button>
                   </DrawerClose>
                   <DrawerClose asChild>
                     <Button variant="outline">Cancel</Button>
