@@ -1,5 +1,4 @@
-import { NewsLetterForm } from "@/components/forms/NewsLetterForm";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +17,10 @@ export const RootLayout = () => {
 
   return (
     <main className="w-full">
-      <header className="w-full flex justify-around items-center h-20 sticky top-0 z-50 filter backdrop-blur-lg">
-        <div className="logo">
-          <img src="" alt="Manivas" />
-          <h1 className="font-bold">Manivas</h1>
-        </div>
+      <header className="w-full flex justify-around items-center h-20 sticky top-0 z-50 filter backdrop-blur-lg bg-white shadow-md">
+        <a href="/">
+          <img src="/images/MANIVAS.png" alt="Manivas" width="40px"/>
+        </a>
 
         {dimensions.width < 900 ? <MobileNav /> : <WebNav />}
       </header>
@@ -133,7 +131,7 @@ const MobileNav = () => {
 
 const WebNav = () => {
   return (
-    <nav className="flex items-center justify-between gap-20">
+    <nav className="flex items-center justify-between gap-20 z-50">
       <ul className="flex gap-10">
         <li>
           <a href="/" className="nav-link">
@@ -143,6 +141,16 @@ const WebNav = () => {
         <li>
           <a href="#features" className="nav-link">
             Features
+          </a>
+        </li>
+        <li>
+          <a href="#how-it-works" className="nav-link">
+            How it Works
+          </a>
+        </li>
+        <li>
+          <a href="#testimonials" className="nav-link">
+            Testimonials
           </a>
         </li>
       </ul>
