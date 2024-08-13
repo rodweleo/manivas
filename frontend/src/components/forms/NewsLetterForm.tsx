@@ -3,6 +3,7 @@ import { FieldValues } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import {
   Card,
+  CardDescription,
   CardContent,
   CardFooter,
   CardHeader,
@@ -18,18 +19,16 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { SubscribeFormSchema } from "@/utils/schemas";
 
-const SubscribeFormSchema = z.object({
-  email: z.string().min(2).max(50).email(),
-});
+
 export const NewsLetterForm = () => {
-  const [isSubmitting, setSubmitting] = useState(false);
+  const [isSending, setSubmitting] = useState(false);
   const { toast } = useToast();
 
   const SubscribeForm = useForm<z.infer<typeof SubscribeFormSchema>>({
@@ -46,55 +45,54 @@ export const NewsLetterForm = () => {
         "https://api-manivas.vercel.app/api/v1/sendMessage",
         data
       );
-      setSubmitting(false);
       toast({
         title: "Alert",
         description: response.data.message,
       });
     } catch (error: AxiosError | unknown | any) {
+      toast({
+        variant: "destructive",
+        description: error.message.includes("Network Error") ? "Failed to subscribe" : "Something went wrong. Please try again later."
+      })
+    } finally {
       setSubmitting(false);
-      if (axios.isAxiosError(error)) {
-        console.error(error);
-      }
     }
   };
 
   return (
-    <>
-      <Form {...SubscribeForm}>
-        <Card>
+    <Form {...SubscribeForm}>
+        <Card className="max-w-[500px]">
           <CardHeader>
-            <CardTitle>Get the latest news from Manivas</CardTitle>
+            <CardTitle>Subscribe to our Newsletter</CardTitle>
+            <CardDescription>Get the latest news from Manivas</CardDescription>
           </CardHeader>
           <form
             onSubmit={SubscribeForm.handleSubmit(subscribe)}
-            className="space-y-8"
+            className="border-0 "
           >
-            <CardContent>
+            <CardContent className="w-full">
               <FormField
                 control={SubscribeForm.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem > 
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="abc@example.com"
                         {...field}
                         type="email"
+                        
                       />
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </CardContent>
             <CardFooter>
-              <Button className="disabled:cursor-not-allowed" disabled>
-                {isSubmitting ? (
+              <Button className="disabled:cursor-not-allowed" disabled={isSending}>
+                {isSending ? (
                   <ClipLoader color="white" size={20} />
                 ) : (
                   "Subscribe"
@@ -104,6 +102,5 @@ export const NewsLetterForm = () => {
           </form>
         </Card>
       </Form>
-    </>
   );
 };

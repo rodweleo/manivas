@@ -11,10 +11,6 @@ import { Transactions } from "./pages/account/transactions/index.tsx";
 import { EditProfileForm } from "./pages/account/profile/EditProfileForm.tsx";
 import { profileLoader } from "./loaders/profileLoader.ts";
 import { Home } from "./pages/home/index.tsx";
-import { HowToUse } from "./pages/how-to-use/index.tsx";
-import { WhyManivas } from "./pages/why-manivas/index.tsx";
-import { Help } from "./pages/help/index.tsx";
-import { ContactUs } from "./pages/contact-us/index.tsx";
 import { Deposit } from "./pages/deposit/index.tsx";
 import { AccountLayout } from "./layouts/AccountLayout/index.tsx";
 import { Notifications } from "./pages/notifications/index.tsx";
@@ -34,22 +30,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      {
-        path: "how-to-use",
-        element: <HowToUse />,
-      },
-      {
-        path: "why-manivas",
-        element: <WhyManivas />,
-      },
-      {
-        path: "help",
-        element: <Help />,
-      },
-      {
-        path: "contact-us",
-        element: <ContactUs />,
-      },
+
       {
         path: "sign-in",
         element: <Login />,

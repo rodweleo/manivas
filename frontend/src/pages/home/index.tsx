@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { SiFsecure } from "react-icons/si";
-import { IoIosFlash } from "react-icons/io";
-import { PiMoneyWavyFill } from "react-icons/pi";
+import { ArrowRight } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -11,136 +9,83 @@ import {
 } from "@/components/ui/card";
 import { CgChevronRight } from "react-icons/cg";
 import { useNavigate } from "react-router";
+import { FEATURES, PARTNERS, TESTIMONIALS } from "@/utils/data";
+import { HowItWorks } from "../how-it-works";
+import { NewsLetterForm } from "@/components/forms/NewsLetterForm";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 
-const FEATURES = [
-  {
-    title: "Mobile Payment Solutions",
-    description: `Make payments anytime, anywhere across Africa with our
-    innovative mobile payment solutions. Even in offline areas,
-    you can securely transfer funds and manage your transactions
-    seamlessly.`,
-  },
-  {
-    title: "SME and Merchant Integration",
-    description:
-      "Empower your business with our integrated financial tools. Streamline invoicing, manage payments effortlessly, and scale operations with tailored solutions designed to meet the unique needs of SMEs and merchants.",
-  },
-  {
-    title: "Personalized Financial Solutions",
-    description:
-      "Unlock personalized financial advice tailored to your goals. Our AI-powered algorithms analyze your financial behavior to offer customized solutions that help you save smarter and invest confidently.",
-  },
-  {
-    title: "Credit Scoring and Digitized Lending",
-    description:
-      "Access to credit made simple. Our comprehensive credit scoring system provides a holistic view of your financial health, enabling faster approvals and seamless lending processes for SMEs.",
-  },
-];
 export const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <main id="hero" className="min-h-screen">
-      <article>
-        <section className="p-5 bg-gradient-to-r from-blue-100 via-white to-blue-100 ease-in-out duration-300 space-y-4 w-full flex items-center justify-center min-h-screen">
+        <section className="bg-grey-200 w-full flex items-center justify-center min-h-screen">
           <div className="space-y-5 max-w-[900px] text-center">
-            <Button className="rounded-full " variant="outline">Manivas 1.0 Public <CgChevronRight /></Button>
+            <Button className="rounded-full " variant="outline">
+              Manivas 1.0 Public <CgChevronRight />
+            </Button>
             <h1 className="font-bold text-5xl leading-snug">
-              Simplifying <span className="text-blue-500">Payments</span> for Growing 
-              <span className="text-blue-500"> Business</span>
+              Simplifying <span className="text-[#253439]">Financial Management</span> for
+              Growing
+              <span className="text-[#253439]"> People</span>
             </h1>
-            <p className="font-semibold text-slate-500 ma-w-[]">Become an expert in your data, create a dashboard for your team and bring them together.</p>
-            <Button
-                  variant="default"
-                  onClick={() => navigate("/sign-up")}
-                >
-                  Get Started
-                </Button>
+            <p className="font-semibold text-slate-500 ">
+              Become an expert in your data, create a dashboard for your team
+              and bring them together.
+            </p>
+            <Button variant="default" onClick={() => navigate("/sign-up")}>
+              Get Started
+            </Button>
           </div>
         </section>
-        <section className="p-5 min-h-screen flex  items-center">
-          <div className="space-y-10 max-w-[400px]">
-            <h1 className="text-3xl font-bold">
-              Payments and data Future-proofed
-            </h1>
-            <ul className="space-y-5">
-              <li className="flex items-center space-x-2">
-                <div className="p-3 bg-deep-blue/20 text-deep-blue rounded-full">
-                  <SiFsecure />
-                </div>
-                <ul>
-                  <li className="font-bold">
-                    <span> 100% Safe and Secure</span>
-                  </li>
-                  <li>
-                    <p className="text-slate-600">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Pariatur maiores.
-                    </p>
-                  </li>
-                </ul>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="p-3 bg-deep-blue/20 text-deep-blue rounded-full">
-                  <IoIosFlash />
-                </div>
-                <ul>
-                  <li className="font-bold">
-                    <span> Speedly Money Exchange</span>
-                  </li>
-                  <li>
-                    <p className="text-slate-600">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Pariatur maiores.
-                    </p>
-                  </li>
-                </ul>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="p-3 bg-deep-blue/20 text-deep-blue rounded-full">
-                  <PiMoneyWavyFill />
-                </div>
-                <ul>
-                  <li className="font-bold">
-                    <span> Flexible Payment Methods</span>
-                  </li>
-                  <li>
-                    <p className="text-slate-600">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Pariatur maiores.
-                    </p>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+        <section className="flex items-center">
+          <ul className="flex flex-wrap gap-10 items-center justify-center">
+            {
+              PARTNERS.map((partner, index: number) => (
+                <li key={index}><img src={partner.image_url} alt={partner.name} width="200px" /></li>
+              ))
+            }
+          </ul>
+          
         </section>
-        <section className="p-5 min-h-screen text-center flex flex-col items-center space-y-5">
-          <h1 className="text-3xl font-bold">Our Key Features</h1>
-          <p className="text-slate-500 max-w-[700px]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-            debitis tempore ex nemo totam minima nostrum ipsa aliquid voluptatem
-            sit illo quo id nesciunt aut ducimus, incidunt iure, sint ipsum.
-          </p>
-
+        <section
+          id="features"
+          className="min-h-screen text-center flex flex-col items-center space-y-5 mx-auto"
+        >
+          <h1 className="text-4xl font-bold max-w-2xl">
+            Comprehensive Features for Personal Finance Management
+          </h1>
           <div className="flex flex-wrap gap-5 justify-center">
             {FEATURES.map((feature, index: number) => {
               return (
                 <Card
-                  className="max-w-[300px] hover:shadow-xl transition duration-300 ease-in-out text-left"
+                  className="max-w-[400px] hover:shadow-xl bg-gray-100 transition duration-300 ease-in-out text-left"
                   key={index}
                 >
                   <CardHeader>
-                    <CardTitle>{feature.title}</CardTitle>
+                    <CardTitle className="space-y-2.5">
+                      <div className="bg-[#253439] text-white w-fit p-2.5 rounded-md">
+                        {feature.icon}
+                      </div>
+                      <h1>{feature.title}</h1>
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>{feature.description}</p>
+                    <p className="text-slate-500">{feature.description}</p>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="-ml-4">
                     <Button
                       variant="link"
-                      className="font-bold text-deep-blue hover:scale-105 transition duration-300 ease-in-out"
+                      className="font-bold text-[#253439] hover:scale-105 flex items-center gap-2 hover:gap-3 transition duration-300 ease-in-out"
                     >
-                      Learn More
+                      <span>Learn More</span> <ArrowRight className="size-4" />
                     </Button>
                   </CardFooter>
                 </Card>
@@ -148,18 +93,107 @@ export const Home = () => {
             })}
           </div>
         </section>
-
-        <section className="p-5  min-h-screen flex flex-col justify-center items-center">
-          <div className="space-y-5 max-w-[300px]">
-            <h1 className="font-bold text-3xl">Get Started with Manivas</h1>
-            <ul className=" list-decimal ml-5 divide-y-2 space-y-3 ">
-              <li className="font-bold text-xl">
-                <h2>Sign up in Minutes</h2>
+        <section
+          id="quantifiable"
+          className="p-10 min-h-screen flex justify-center flex-wrap items-center mx-auto w-full bg-[#253439]"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3920/3920913.png"
+            alt="Finance Calculation"
+          />
+          <div className="max-w-[800px] space-y-5">
+            <div className="max-w-[800px] space-y-2.5">
+              <h1 className="sm:text-7xl text-5xl font-bold w-full text-white">
+                Quantify your Finances with Manivas
+              </h1>
+              <p className="text-slate-200">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Reprehenderit suscipit tempora reiciendis. Quam, ad excepturi
+                ducimus accusantium similique animi tempore commodi, sed labore
+                hic quas quae, delectus sit architecto provident.
+              </p>
+            </div>
+            <ul className="space-y-2.5 ml-5 border-l-emerald-700 before:">
+              <li>
+                <div>
+                  <h2 className="text-white font-bold">
+                    Where your money goes ?
+                  </h2>
+                  <p className="text-slate-200">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Nemo distinctio incidunt porro quas, ipsam vel ducimus nisi
+                    sapiente expedita et ratione quidem enim, omnis neque vitae
+                    officia aut nulla saepe?
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h2 className="text-white font-bold">Works on any device</h2>
+                  <p className="text-slate-200">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Nemo distinctio incidunt porro quas, ipsam vel ducimus nisi
+                    sapiente expedita et ratione quidem enim, omnis neque vitae
+                    officia aut nulla saepe?
+                  </p>
+                </div>
               </li>
             </ul>
+            <Button className="bg-white text-black">
+              <a href="#">Learn More</a>
+            </Button>
           </div>
         </section>
-      </article>
+        <HowItWorks />
+        <section id="testimonials" className="flex flex-col items-center space-y-5">
+          <div className="text-center">
+            <h1 className="font-bold sm:text-4xl text-2xl">
+              What Our Customers Say
+            </h1>
+            <p className="text-slate-500 text-lg">
+              Hear from people about how Manivas has helped them take control of
+              their finances.
+            </p>
+          </div>
+          <Carousel className="w-full max-w-md" plugins={[
+            Autoplay({
+              delay: 4000
+            })
+          ]}>
+  <CarouselContent>
+  {TESTIMONIALS.map((testimonial, index: number) => (
+    <CarouselItem key={index} className="max-w-[500px]">
+              <Card >
+                <CardHeader>
+                  <CardTitle className="flex items-start gap-2.5">
+                    <Avatar>
+                      <AvatarImage
+                        src={testimonial.image_url}
+                        alt={`${testimonial.customer_name}'s Image`}
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div>
+                    <h1>{testimonial.customer_name}</h1>
+                    <p className="text-slate-500 font-normal text-sm">{testimonial.job_title}</p>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-500">"{testimonial.testimony}"</p>
+                </CardContent>
+              </Card>
+              </CarouselItem>
+            ))}
+
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+        </section>
+        <section className="flex flex-col items-center w-full">
+          <NewsLetterForm />
+        </section>
     </main>
   );
 };

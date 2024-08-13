@@ -9,7 +9,6 @@ export const AccountLayout = () => {
     const user = auth.currentUser;
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location)
     const currentLocation = location.pathname.trim().split("/")[1].charAt(0).toUpperCase() + location.pathname.trim().split("/")[1].slice(1, location.pathname.trim().split("/")[1].split("").length)
     useEffect(() => {
         if(auth.currentUser === null){
