@@ -1,5 +1,5 @@
 import { Form, useNavigate } from "react-router-dom";
-import { auth } from "../../../firebase/firebase.config";
+import { auth } from "../../../../firebase/firebase.config";
 import { Button } from "@/components/ui/button";
 import { GiStairsGoal } from "react-icons/gi";
 import { IoIosArrowForward } from "react-icons/io";
@@ -19,18 +19,18 @@ export const Profile = () => {
       <article className="space-y-5">
         <section className="flex flex-col items-center">
           <div className="relative flex flex-col items-center">
-              <img
-                src={user?.photoURL ? user.photoURL : "/images/Profile Avatar Placeholder.png"}
-                alt={`${user?.displayName}'s Avatar`}
-                width="100px"
-                className="rounded-full shadow-lg shadow-green-500"
-              />
-              <h1 className="text-xl font-semibold">{user?.displayName}</h1>
-              
-              <Form action="edit" className="w-full mt-5">
-                <Button className="rounded-full w-full" type="submit">Edit Profile</Button>
-              </Form>
-            </div>
+            <img
+              src={user?.photoURL ? user.photoURL : "/images/Profile Avatar Placeholder.png"}
+              alt={`${user?.displayName}'s Avatar`}
+              width="100px"
+              className="rounded-full shadow-lg shadow-green-500"
+            />
+            <h1 className="text-xl font-semibold">{user?.displayName}</h1>
+
+            <Form action="edit" className="w-full mt-5">
+              <Button className="rounded-full w-full" type="submit">Edit Profile</Button>
+            </Form>
+          </div>
         </section>
         <section>
           <ul className="divide-y">
@@ -39,10 +39,10 @@ export const Profile = () => {
           </ul>
         </section>
       </article>
-      
-      
 
-     
+
+
+
     </main>
   );
 };

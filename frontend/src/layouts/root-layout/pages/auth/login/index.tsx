@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
 import {
   getAuth,
   signInWithPopup,
@@ -29,6 +28,7 @@ import {
 import { provider } from "@/auth/google/google-auth-provider";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -39,10 +39,9 @@ const formSchema = z.object({
   }),
 });
 
-export const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
   const auth = getAuth();
   const LoginForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,8 +56,8 @@ export const Login = () => {
     signInWithEmailAndPassword(auth, values.username, values.password)
       .then((userCredential) => {
         setIsSubmitting(false);
-        if(userCredential.user !== null){
-          navigate("/account/dashboard")
+        if (userCredential.user !== null) {
+          window.open("/dashboard", "_blank")
         }
       })
       .catch((error) => {
@@ -74,26 +73,22 @@ export const Login = () => {
       });
   };
 
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        toast({
-          title: "Authentication",
-          description: `Welcome back ${result?.user?.displayName}`,
-        });
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
 
-        navigate("/account", {
-          replace: true,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        toast({
-          variant: "destructive",
-          title: "Network Error",
-          description: "Apologises, something went wrong. Please, try again.",
-        });
-      });
+      toast.success("Authenticated successfully!")
+      setTimeout(() => {
+        toast.success("Redirecting...")
+      }, 1000)
+
+      window.location.href = "/account/dashboard";
+
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong")
+    }
+
   };
 
   const resetPassword = () => {
@@ -222,4 +217,4 @@ export const Login = () => {
       </article>
     </section>
   );
-};
+}

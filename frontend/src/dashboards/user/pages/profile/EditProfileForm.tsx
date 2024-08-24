@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../../firebase/firebase.config";
+import { auth } from "../../../../firebase/firebase.config";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";

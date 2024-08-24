@@ -24,12 +24,12 @@ import Autoplay from "embla-carousel-autoplay"
 import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
 
-export const Home = () => {
+export default function Home() {
   const navigate = useNavigate();
   return (
-    <main className="min-h-screen p-5">
+    <main className="min-h-screen">
       <section
-        id="#"
+        id="intro"
         className="bg-grey-200 w-full flex items-center justify-center min-h-screen"
       >
         <AnimatedGridPattern
@@ -42,7 +42,7 @@ export const Home = () => {
             "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 -z-50"
           )}
         />
-        <div className="space-y-5 max-w-[900px] text-center">
+        <div className="space-y-5 max-w-[900px] text-center flex flex-col items-center">
           <Button className="rounded-full " variant="outline">
             Manivas 1.0 Public <CgChevronRight />
           </Button>
@@ -51,16 +51,21 @@ export const Home = () => {
             <span className="text-[#253439]">Financial Management Simpler </span>
             as You Grow
           </h1>
-          <p className="font-semibold text-slate-500 ">
-            Become an expert in your data, create a dashboard for your team and
-            bring them together.
+          <p className="font-semibold text-slate-500 max-w-[400px]">
+            From investments to savings, we provide the tools and advice you need to achieve your financial goals.
           </p>
-          <Button variant="default" onClick={() => navigate("/sign-up")}>
-            Get Started
-          </Button>
+          <ul className="flex items-center gap-5">
+            <li><Button className="px-10 rounded-full" onClick={() => navigate("/sign-up")}>
+              Try now for free
+            </Button></li>
+            <li><Button className="px-10 rounded-full" variant="outline" onClick={() => navigate("/sign-up")}>
+              See all features
+            </Button></li>
+          </ul>
         </div>
       </section>
-      <section className="flex items-center w-full justify-center">
+      <section className="flex flex-col items-center w-full justify-center">
+        <h1 className="sm:text-4xl text-2xl font-bold">Our Trusted Partners</h1>
         <ul className="flex flex-wrap gap-10 items-center justify-center">
           {PARTNERS.map((partner, index: number) => (
             <li key={index}>
@@ -161,59 +166,85 @@ export const Home = () => {
       <HowItWorks />
       <section
         id="testimonials"
-        className="w-full flex flex-col items-center justify-center space-y-10"
+        className="py-20 w-full flex flex-col justify-center items-center space-y-10"
       >
         <div className="text-center">
           <h1 className="font-bold sm:text-4xl text-2xl pt-40">
             What Our Customers Say
           </h1>
-          <p className="text-slate-500 text-lg">
+          <p className="text-slate-500 text-md">
             Hear from people about how Manivas has helped them take control of
             their finances.
           </p>
         </div>
-        <Carousel
-          className="w-full max-w-md"
-          plugins={[
-            Autoplay({
-              delay: 4000,
-            }),
-          ]}
-        >
-          <CarouselContent>
-            {TESTIMONIALS.map((testimonial, index: number) => (
-              <CarouselItem key={index} className="max-w-[500px]">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-start gap-2.5">
-                      <Avatar>
-                        <AvatarImage
-                          src={testimonial.image_url}
-                          alt={`${testimonial.customer_name}'s Image`}
-                        />
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h1>{testimonial.customer_name}</h1>
-                        <p className="text-slate-500 font-normal text-sm">
-                          {testimonial.job_title}
-                        </p>
-                      </div>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-slate-500">"{testimonial.testimony}"</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div>
+          <Carousel
+            className="w-full max-w-md"
+            plugins={[
+              Autoplay({
+                delay: 4000,
+              }),
+            ]}
+          >
+            <CarouselContent>
+              {TESTIMONIALS.map((testimonial, index: number) => (
+                <CarouselItem key={index} className="max-w-[500px]">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-start gap-2.5">
+                        <Avatar>
+                          <AvatarImage
+                            src={testimonial.image_url}
+                            alt={`${testimonial.customer_name}'s Image`}
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <h1>{testimonial.customer_name}</h1>
+                          <p className="text-slate-500 font-normal text-sm">
+                            {testimonial.job_title}
+                          </p>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-slate-500">"{testimonial.testimony}"</p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
       </section>
-      <section className="flex flex-col items-center w-full">
-        <NewsLetterForm />
+      <section
+        id="testimonials"
+        className="py-20 w-full flex gap-10 justify-center items-center"
+      >
+        <img src="/images/corporate-finance-software_cover-upd-01.svg" width="500px" />
+        <div className="flex flex-col justify-between h-full">
+          <div className="max-w-2xl flex flex-col h-full">
+            <h1 className="font-bold sm:text-6xl text-3xl pt-40">
+              Join 20+ Million People Who Trust Us With Their Financials
+            </h1>
+            <p className="text-slate-500 text-md">
+              Simply your banking with our user-friendly platform, providing you with the tool and resources to manage your accounts efficiently.
+            </p>
+          </div>
+          <Button className="w-fit px-20 rounded-full text-white">Join Now</Button>
+        </div>
+      </section>
+      <section className="flex flex-col items-center w-full bg-blue-900 py-20 text-white space-y-2.5">
+        <h1 className="sm:text-5xl text-2xl font-bold">It's easy to get started</h1>
+        <p className="text-slate-200">Get the app to explore the world of premium finance, get fast and safe transaction to help you find your dream life.</p>
+        <ul>
+          <li><button type="button" className="h-fit w-fit"><img src="/images/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Download Manivas from Google Play" loading="lazy" width="200px" /></button></li>
+        </ul>
+        <div className="hidden">
+          <NewsLetterForm />
+        </div>
       </section>
     </main>
   );
