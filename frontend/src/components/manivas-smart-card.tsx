@@ -1,7 +1,8 @@
+import { Transaction } from "@/utils/interfaces"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card"
 
 export default function ManivasSmartCart({ transactions }: {
-    transactions?: any
+    transactions?: Transaction[]
 }) {
     return (
         <Card className="max-w-[450px] bg-gradient-to-tr from-blue-300 via-blue-100 to-blue-300 ">
@@ -12,7 +13,7 @@ export default function ManivasSmartCart({ transactions }: {
             <CardContent>
                 <div>
                     <h2 className="text-gray-500">Account Balance</h2>
-                    <span className="text-xl font-bold">{transactions ? transactions.reduce((sum, transaction) => {
+                    <span className="text-xl font-bold">{transactions ? transactions.reduce((sum: number, transaction) => {
                         return sum + transaction.amount
                     }, 0).toLocaleString("en-us", {
                         style: "currency",

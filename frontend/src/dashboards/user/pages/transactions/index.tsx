@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowUpDown, ChevronDown, DollarSign, Filter, Plus, Search } from "lucide-react"
+import { ArrowUpDown, DollarSign, Filter, Plus } from "lucide-react"
 
 export default function TransactionsPage() {
     const [searchTerm, setSearchTerm] = React.useState("")

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,11 +64,9 @@ export default function Login() {
         setIsSubmitting(false);
         const errorMessage = error.message;
         if (errorMessage.includes("invalid-credential")) {
-          toast({
-            variant: "destructive",
-            title: "Authentication Error",
-            description: "Incorrect username or password",
-          });
+          toast.error("Authentication error: Incorrect username or password", {
+            theme: "complete"
+          })
         }
       });
   };

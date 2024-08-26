@@ -14,10 +14,7 @@ app.use(express.json());
 // Allow requests from a specific origin
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://www.manivas.com",
-    ],
+    origin: ["http://localhost:5173", "https://www.manivas.com"],
   })
 );
 
@@ -39,7 +36,7 @@ const generateAccessToken = async () => {
 };
 
 app.get("/", async (req, res) => {
-  res.send('Manivas Co-operation server is live.')
+  res.send("Manivas Co-operation server is live.");
 
   /*const response = await axios.post(
     `${process.env.MPESA_BASE_URL}/mpesa/accountbalance/v1/query`,
@@ -113,13 +110,13 @@ app.post("/api/mpesa/stkPush", async (req, res) => {
 });
 
 app.post("/api/mpesa/callback", async (req, res) => {
-  try{
+  try {
     const docRef = await addDoc(collection(db, "transactions"), {
-      body: req.body
-    })
-    console.info(`Transaction saved under id ${docRef.id}`)
-  }catch(error){
-    console.error(error)
+      body: req.body,
+    });
+    console.info(`Transaction saved under id ${docRef.id}`);
+  } catch (error) {
+    console.error(error);
   }
 
   const callBackData = req.body;
@@ -133,17 +130,16 @@ app.post("/api/mpesa/callback", async (req, res) => {
   } else {
     const callbackBody = req.body.Body.stkCallback.CallbackMetadata;
 
-    const amount = callbackBody.Item[0].Value
-    const transactionReceiptNumber = callbackBody.Item[1].Value
-    const transactionDate = callbackBody.Item[3].Value
-    const phoneNumber = callbackBody.Item[4].Value
+    const amount = callbackBody.Item[0].Value;
+    const transactionReceiptNumber = callbackBody.Item[1].Value;
+    const transactionDate = callbackBody.Item[3].Value;
+    const phoneNumber = callbackBody.Item[4].Value;
 
     const checkoutRequestId = req.body.Body.stkCallback.CheckoutRequestID;
     const merchantRequestId = req.body.Body.stkCallback.MerchantRequestID;
     const resultCode = req.body.Body.stkCallback.ResultCode;
     const resultDescription = req.body.Body.stkCallback.ResultDesc;
   }
-
 });
 
 /*INTEGRATING WITH BINANCE SERVER*/
@@ -163,7 +159,7 @@ binance.balance((error, balances)=>{
 //API TO SEND MAIL
 app.get("/api/v1/mail/sendMail", (req, res) => {
   //const { email } = req.body;
-  const email = "leorodwel86@gmail.com"
+  const email = "leorodwel86@gmail.com";
 
   // Create a SMTP transporter
   const transporter = nodemailer.createTransport({
@@ -181,7 +177,7 @@ app.get("/api/v1/mail/sendMail", (req, res) => {
     from: "verify@manivas.com",
     to: email,
     subject: "Test Email",
-    html: 'Hello'
+    html: "Hello",
   };
 
   // Send email
@@ -201,6 +197,19 @@ app.get("/api/v1/mail/sendMail", (req, res) => {
   });
 });
 
+app.get("/db/test", (req, res) => {
+  const sql = "SELECT * FROM aGpN9jd_posts";
+  dbConnection.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+
+    if (results) {
+      res.status(200).json(results);
+    }
+  });
+});
 app.listen("3000", () => {
-    console.log('Manivas Co-operation server is live on port 3000')
+  console.log("Manivas Co-operation server is live on port 3000");
 });

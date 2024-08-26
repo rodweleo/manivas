@@ -15,26 +15,35 @@ import MyWallet from "@/components/my-wallet";
 import UserTransactionListTable from "@/components/user-transaction-list-table";
 import { Link } from "react-router-dom";
 import UserFinancialAnalysisChart from "@/components/charts/user-financial-analysis-chart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 
-
+const BILLS = [
+  { id: 1, name: 'Rent', amount: 1200, dueDate: '2023-07-01', frequency: 'Monthly' },
+  { id: 2, name: 'Electricity', amount: 80, dueDate: '2023-06-25', frequency: 'Monthly' },
+  { id: 3, name: 'Internet', amount: 50, dueDate: '2023-06-30', frequency: 'Monthly' },
+  { id: 4, name: 'Car Insurance', amount: 200, dueDate: '2023-07-15', frequency: 'Quarterly' },
+]
 export default function Dashboard() {
-  const [bills, setBills] = useState([
-    { id: 1, name: 'Rent', amount: 1200, dueDate: '2023-07-01', frequency: 'Monthly' },
-    { id: 2, name: 'Electricity', amount: 80, dueDate: '2023-06-25', frequency: 'Monthly' },
-    { id: 3, name: 'Internet', amount: 50, dueDate: '2023-06-30', frequency: 'Monthly' },
-    { id: 4, name: 'Car Insurance', amount: 200, dueDate: '2023-07-15', frequency: 'Quarterly' },
-  ])
+  const [bills, setBills] = useState(BILLS)
 
-  const getDaysUntilDue = (dueDate) => {
+
+  useEffect(() => {
+    setBills(BILLS)
+  }, [])
+
+  const getDaysUntilDue = (dueDate: string) => {
     const today = new Date()
     const due = new Date(dueDate)
-    const diffTime = due - today
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
+
+    // Calculate the difference in milliseconds
+    const diffTime = due.getTime() - today.getTime();
+    // Calculate the difference in days, rounded down
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
   }
 
   return (

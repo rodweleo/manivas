@@ -4,11 +4,11 @@ import SocialMediaLinks from "./social-media-links";
 
 export default function RootMainFooter() {
     return (
-        <footer className="p-5 items-center w-full space-y-5">
-            <section className="flex justify-center gap-10">
+        <footer className="container p-2.5 items-center w-full space-y-5">
+            <section className="flex flex-wrap gap-5 justify-between">
                 <div className="max-w-[400px] space-y-2">
                     <Link to="/" className="font-bold sm:text-4xl text-2xl flex items-end"><img src="/images/MANIVAS.png" width="40px" alt="Manivas" loading="lazy" />anivas</Link>
-                    <p className="text-black text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit, dolor, sit amet consectetur adipisicing elit.</p>
+                    <p className="text-black text-md">Lorem ipsum dolor, sit amet consectetur adipisicing elit, dolor, sit amet consectetur adipisicing elit.</p>
                     <SocialMediaLinks />
                 </div>
                 <div className="flex flex-wrap gap-5 justify-between">
@@ -25,11 +25,10 @@ export default function RootMainFooter() {
             </section>
 
             <Separator />
-            <section className="flex justify-between">
-                <p className="flex justify-between">
-                    <span>&copy; Copyright {new Date().getFullYear()} Manivas.</span> <span>All Rights
-                        reserved.</span>
-                </p>
+            <section className="flex flex-wrap  gap-5 justify-between">
+                <span>&copy; Copyright {new Date().getFullYear()} Manivas.</span>
+                <span>All Rights
+                    reserved.</span>
                 <ul className="flex gap-5">
                     <li><NavLink to="terms-of-use">Terms of Use</NavLink></li>
                     <li><NavLink to="privacy-policy">Privacy Policy</NavLink></li>

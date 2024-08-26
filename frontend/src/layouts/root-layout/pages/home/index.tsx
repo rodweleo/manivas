@@ -11,14 +11,11 @@ import { CgChevronRight } from "react-icons/cg";
 import { useNavigate } from "react-router";
 import { FEATURES, PARTNERS, TESTIMONIALS } from "@/utils/data";
 import { HowItWorks } from "../how-it-works";
-import { NewsLetterForm } from "@/components/forms/NewsLetterForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
@@ -30,7 +27,7 @@ export default function Home() {
     <main className="min-h-screen">
       <section
         id="intro"
-        className="bg-grey-200 w-full flex items-center justify-center min-h-screen"
+        className="bg-grey-200 w-full flex items-center justify-center min-h-screen p-2.5"
       >
         <AnimatedGridPattern
           numSquares={30}
@@ -46,13 +43,13 @@ export default function Home() {
           <Button className="rounded-full " variant="outline">
             Manivas 1.0 Public <CgChevronRight />
           </Button>
-          <h1 className="font-bold sm:text-7xl text-3xl leading-snug">
+          <h1 className="font-bold sm:text-7xl text-4xl leading-snug">
             Making {" "}
             <span className="text-[#253439]">Financial Management Simpler </span>
             as You Grow
           </h1>
-          <p className="font-semibold text-slate-500 max-w-[400px]">
-            From investments to savings, we provide the tools and advice you need to achieve your financial goals.
+          <p className="text-slate-500 max-w-xl text-xl sm:text-2xl">
+            From financial tracking to savings & investments , we provide the tools and advice you need to achieve your financial goals.
           </p>
           <ul className="flex items-center gap-5">
             <li><Button className="px-10 rounded-full" onClick={() => navigate("/sign-up")}>
@@ -64,7 +61,7 @@ export default function Home() {
           </ul>
         </div>
       </section>
-      <section className="flex flex-col items-center w-full justify-center">
+      <section className="flex flex-col items-center w-full justify-center space-y-5">
         <h1 className="sm:text-4xl text-2xl font-bold">Our Trusted Partners</h1>
         <ul className="flex flex-wrap gap-10 items-center justify-center">
           {PARTNERS.map((partner, index: number) => (
@@ -76,7 +73,7 @@ export default function Home() {
       </section>
       <section
         id="features"
-        className="min-h-screen text-center flex flex-col items-center justify-center space-y-5 mx-auto"
+        className="py-20 px-2.5 text-center flex flex-col items-center justify-center space-y-5 mx-auto"
       >
         <h1 className="text-4xl font-bold max-w-2xl">
           Comprehensive Features for Personal Finance Management
@@ -93,11 +90,11 @@ export default function Home() {
                     <div className="bg-[#253439] text-white w-fit p-2.5 rounded-md">
                       {feature.icon}
                     </div>
-                    <h1>{feature.title}</h1>
+                    <p>{feature.title}</p>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-500">{feature.description}</p>
+                <CardContent className="text-slate-500">
+                  {feature.description}
                 </CardContent>
                 <CardFooter className="-ml-4">
                   <Button
@@ -114,11 +111,12 @@ export default function Home() {
       </section>
       <section
         id="quantifiable"
-        className="p-10 min-h-screen flex justify-center flex-wrap items-center mx-auto w-full bg-[#253439]"
+        className="p-2.5 flex gap-10 justify-center flex-wrap items-center mx-auto w-full bg-[#253439]"
       >
         <img
-          src="https://cdn-icons-png.flaticon.com/512/3920/3920913.png"
+          src="https://securityintelligence.com/wp-content/uploads/2023/03/Close-up-an-accountant-working-about-financial-with-calculator-at-his-office-to-calculate-expenses-Accounting-concept.jpeg"
           alt="Finance Calculation"
+          className="h-full sm:w-[700px]  rounded-xl"
         />
         <div className="max-w-[800px] space-y-5">
           <div className="max-w-[800px] space-y-2.5">
@@ -132,13 +130,13 @@ export default function Home() {
               hic quas quae, delectus sit architecto provident.
             </p>
           </div>
-          <ul className="space-y-2.5 ml-5 border-l-emerald-700 before:">
+          <ul className="space-y-2.5 border-l-emerald-700 before:">
             <li>
               <div>
-                <h2 className="text-white font-bold">
+                <h2 className="text-white font-bold text-lg">
                   Where your money goes ?
                 </h2>
-                <p className="text-slate-200">
+                <p className="text-slate-200 ">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo
                   distinctio incidunt porro quas, ipsam vel ducimus nisi
                   sapiente expedita et ratione quidem enim, omnis neque vitae
@@ -148,7 +146,7 @@ export default function Home() {
             </li>
             <li>
               <div>
-                <h2 className="text-white font-bold">Works on any device</h2>
+                <h2 className="text-white font-bold text-lg">Works on any device</h2>
                 <p className="text-slate-200">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo
                   distinctio incidunt porro quas, ipsam vel ducimus nisi
@@ -158,7 +156,7 @@ export default function Home() {
               </div>
             </li>
           </ul>
-          <Button className="bg-white text-black">
+          <Button className="bg-white text-black rounded-full px-10">
             <a href="#">Learn More</a>
           </Button>
         </div>
@@ -166,29 +164,29 @@ export default function Home() {
       <HowItWorks />
       <section
         id="testimonials"
-        className="py-20 w-full flex flex-col justify-center items-center space-y-10"
+        className="w-full flex flex-col items-center space-y-10 py-10 px-2.5"
       >
         <div className="text-center">
-          <h1 className="font-bold sm:text-4xl text-2xl pt-40">
+          <h1 className="font-bold sm:text-4xl text-2xl">
             What Our Customers Say
           </h1>
-          <p className="text-slate-500 text-md">
+          <p className="text-slate-500 sm:text-xl">
             Hear from people about how Manivas has helped them take control of
             their finances.
           </p>
         </div>
-        <div>
+        <div className="p-10">
           <Carousel
-            className="w-full max-w-md"
+            className="w-full max-w-xs sm:max-w-md"
             plugins={[
               Autoplay({
-                delay: 4000,
+                delay: 2000,
               }),
             ]}
           >
             <CarouselContent>
               {TESTIMONIALS.map((testimonial, index: number) => (
-                <CarouselItem key={index} className="max-w-[500px]">
+                <CarouselItem key={index} className="max-w-[400px] sm:max-w-[500px]">
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-start gap-2.5">
@@ -214,38 +212,35 @@ export default function Home() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+
           </Carousel>
         </div>
+
       </section>
       <section
-        id="testimonials"
-        className="py-20 w-full flex gap-10 justify-center items-center"
+        id="join-us"
+        className="w-full flex px-2.5 gap-10 justify-center items-center bg-[url('https://blog.dol.gov/sites/default/files/inline-images/You%20Have%20the%20Right%20to%20a%20Union.jpg')] bg-fixed bg-center bg-no-repeat bg-opacity-50 relative py-20"
       >
-        <img src="/images/corporate-finance-software_cover-upd-01.svg" width="500px" />
-        <div className="flex flex-col justify-between h-full">
-          <div className="max-w-2xl flex flex-col h-full">
-            <h1 className="font-bold sm:text-6xl text-3xl pt-40">
+        <div className="absolute bg-[#253439] inset-0 bg-opacity-70"></div>
+        <div className="flex flex-col justify-between items-center h-full z-20 space-y-5">
+          <div className="max-w-3xl flex flex-col h-full text-center">
+            <h1 className="font-bold sm:text-6xl text-3xl text-white">
               Join 20+ Million People Who Trust Us With Their Financials
             </h1>
-            <p className="text-slate-500 text-md">
+            <p className="text-slate-200 text-lg">
               Simply your banking with our user-friendly platform, providing you with the tool and resources to manage your accounts efficiently.
             </p>
           </div>
-          <Button className="w-fit px-20 rounded-full text-white">Join Now</Button>
+          <Button className="w-fit px-20 rounded-full bg-white text-slate-900 hover:bg-slate-100 hover:text-black">Join Now</Button>
         </div>
       </section>
-      <section className="flex flex-col items-center w-full bg-blue-900 py-20 text-white space-y-2.5">
+      <section className="px-2.5 flex flex-col items-center w-full bg-[#253439] py-20 text-white space-y-2.5 mt-10">
         <h1 className="sm:text-5xl text-2xl font-bold">It's easy to get started</h1>
         <p className="text-slate-200">Get the app to explore the world of premium finance, get fast and safe transaction to help you find your dream life.</p>
         <ul>
           <li><button type="button" className="h-fit w-fit"><img src="/images/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Download Manivas from Google Play" loading="lazy" width="200px" /></button></li>
         </ul>
-        <div className="hidden">
-          <NewsLetterForm />
-        </div>
       </section>
     </main>
   );
-};
+}

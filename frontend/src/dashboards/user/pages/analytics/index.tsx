@@ -3,8 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { BookOpenIcon, CalendarIcon, ClockIcon } from "lucide-react";
-import { title } from "process";
-//import { Button } from "react-day-picker";
 import Chart from "react-google-charts";
 
 export default function UserAnalytics() {

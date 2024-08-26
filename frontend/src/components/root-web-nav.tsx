@@ -36,12 +36,12 @@ export default function RootWebNav() {
                 currentUser ? <Button onClick={navigateToDashboard}>Go to Dashboard</Button> : <ul className="flex gap-5">
                     <li>
                         <NavLink to="/auth/register">
-                            <Button className="w-full">Get Started</Button>
+                            <Button className="w-full rounded-full px-10 bg-[#253439]">Get Started</Button>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink className="font-bold " to="/auth/login">
-                            <Button variant="outline" className="w-full">
+                            <Button variant="outline" className="w-full rounded-full px-10">
                                 Login
                             </Button>
                         </NavLink>

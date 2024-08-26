@@ -1,54 +1,70 @@
-import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import { useRef } from "react";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 
+const STEPS = [
+  {
+    title: "Enter Information / Register",
+    description: "Begin by creating your account and entering essential personal details. This registration process sets up your profile and prepares the system for personalized financial management.",
+    image_url: "data:image/jpeg;base64,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"
+  },
+  {
+    title: "Add Cards & Transaction Information",
+    description: "Effortlessly link your credit and debit cards to Manivas by entering your card details securely, allowing the system to automatically import and categorize transactions. Enjoy seamless integration with supported banks for real-time updates and automatic expense tracking. Set reminders for upcoming bills and manage recurring payments to stay on top of your financial commitments, ensuring a comprehensive view of your spending and budgeting.",
+    image_url: "data:image/jpeg;base64,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"
+  },
+  {
+    title: "Track Your Financials in Real-Time",
+    description: "Monitor your financial health with real-time updates. The system provides insights into your spending habits, helps manage your budget, and tracks your financial goals effectively.",
+    image_url: "/images/corporate-finance-software_cover-upd-01.svg"
+  }
+]
 export const HowItWorks = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const div1Ref = useRef<HTMLDivElement>(null);
-  const div2Ref = useRef<HTMLDivElement>(null);
-  const div3Ref = useRef<HTMLDivElement>(null);
-  return (
-    <section id="how-it-works" className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center max-w-3xl">
-            <h1 className="text-4xl font-bold">How it works</h1>
-            <p className="text-slate-500">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos, inventore, a, repellat consectetur illum numquam hic ullam ut asperiores recusandae voluptatem ducimus omnis id voluptatum. Fugit optio ducimus sequi cum.</p>
-        </div>
-      <div
-        className="relative h-[260px] flex w-full items-center justify-center overflow-hidden bg-background p-10 py-20"
-        ref={containerRef}
-      >
-        <div className="flex h-full w-full flex-col items-stretch justify-between gap-10">
-          <div className="flex flex-row justify-between">
-            <div ref={div1Ref} className="bg-white z-50 border p-5 rounded-md">
-              <h1 className="font-bold text-3xl">Information</h1>
-              <p className="text-slate-500">Enter your details.</p>
-            </div>
-            <div ref={div2Ref} className="bg-white z-50 border p-5 rounded-md">
-              <h1 className="font-bold text-3xl">Data Secure</h1>
-              <p className="text-slate-500">Enter your details.</p>
-            </div>
-            <div ref={div3Ref} className="bg-white z-50 border p-5 rounded-md">
-              <h1 className="font-bold text-3xl">Add Cards</h1>
-              <p className="text-slate-500">Enter your details.</p>
-            </div>
-          </div>
-        </div>
 
-        <AnimatedBeam
-          containerRef={containerRef}
-          fromRef={div1Ref}
-          toRef={div2Ref}
-          duration={3}
-          curvature={200}
-        />
-        <AnimatedBeam
-          containerRef={containerRef}
-          fromRef={div2Ref}
-          toRef={div3Ref}
-          duration={3}
-          curvature={-200}
-        />
+  return (
+    <section id="how-it-works" className="container py-20 flex flex-col items-center justify-center space-y-5">
+      <div className="text-center max-w-3xl space-y-2">
+        <h1 className="text-4xl font-bold">How it works</h1>
+        <p className="text-slate-500">With Manivas, managing your finances becomes intuitive and stress-free, giving you the insights and control you need to achieve your financial goals.</p>
       </div>
+
+      <ul className="space-y-10">
+        {
+          STEPS.map((step, index: number) => (
+            <li key={step.title}>
+              <StepCard step={step} index={index} />
+            </li>
+          ))
+        }
+      </ul>
     </section>
   );
 };
+
+
+function StepCard({ step, index }: {
+  step: {
+    title: string,
+    description: string,
+    image_url: string
+  },
+  index: number
+}) {
+  return (
+    <Card className={`w-fit flex flex-wrap flex-row relative ${index % 2 !== 0 ? "flex-row-reverse" : ""}`}>
+      <span className={`text-2xl text-white border border-slate-200 relative left-0 bg-slate-500 h-fit p-2.5 ${index % 2 !== 0 ? "rounded-bl-lg rounded-tr-lg" : "rounded-br-lg rounded-tl-lg"}`}>0{index + 1}</span>
+      <CardHeader className="max-w-lg">
+        <CardTitle>
+          {step.title}
+        </CardTitle>
+        <CardDescription className="text-lg">
+          {step.description}
+        </CardDescription>
+      </CardHeader>
+      <div className="p-5">
+        <img src={step.image_url} className="size-50 rounded-xl" width="250px" alt={step.title} loading="lazy" />
+      </div>
+
+    </Card>
+
+  )
+}

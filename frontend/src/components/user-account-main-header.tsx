@@ -13,10 +13,29 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "./ui/button";
 import { toast } from "react-toastify"
+import { useEffect, useState } from "react";
+import { User } from "firebase/auth";
 
 export default function UserAccountMainHeader() {
-    const user = auth.currentUser;
+    const [currentUser, setCurrentUser] = useState<User | null>(auth.currentUser);
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+
+        // Set up a listener for authentication state changes
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            setCurrentUser(user);
+            if (user === null) {
+                navigate("/", {
+                    replace: true
+                })
+            }
+        });
+
+        // Clean up the listener on component unmount
+        return () => unsubscribe();
+    }, [navigate, currentUser]);
 
 
     const signOut = async () => {
@@ -54,7 +73,7 @@ export default function UserAccountMainHeader() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <button title="My Account" type="button" className="flex">
-                                <img src={user && user.photoURL ? user.photoURL : ""} alt="" className="size-4 bg-green-500 rounded-full" />
+                                <img src={currentUser && currentUser.photoURL ? currentUser.photoURL : ""} alt="Hi, Guest" className=" bg-green-500 rounded-full mb-1" width="17.75px" />
                             </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56">
